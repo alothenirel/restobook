@@ -50,6 +50,12 @@ coverage.xml
 # Django stuff:
 *.log
 
+# for web2py
+cache
+databases
+errors
+sessions
+
 # Sphinx documentation
 docs/_build/
 
