@@ -1,0 +1,7 @@
+#restaurants {
+    width:100%;
+}
+
+#restaurants tr{
+    border: 1px black solid;
+}

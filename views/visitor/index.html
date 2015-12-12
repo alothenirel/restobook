@@ -1,0 +1,13 @@
+{{response.files.append(URL('static',"css/visitor/index.css"))}}
+{{extend 'layout.html'}}
+
+<h1>Les Restaurants :</h1>
+<table id="restaurants">
+{{for restaurant in restaurants:}}
+    <tr>
+        <td>{{=restaurant.get("name","Nom indisponnible")}}</td>
+        <td>{{=restaurant.get("address","Adresse indisponnible")}}</td>
+        <td><a href="reserve/{{=restaurant.id}}">Réserver</a></td>
+    </tr>
+{{pass}}
+</table>

@@ -51,6 +51,7 @@ coverage.xml
 *.log
 
 # for web2py
+*.bak
 cache
 databases
 errors

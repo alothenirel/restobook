@@ -1,0 +1,10 @@
+{{extend 'layout.html'}}
+<h1>{{=restaurant.get("name","")}}</h1>
+{{for day, reservations in planning.iteritems():}}
+    <h2>{{=day}}</h2>
+    <ul>
+    {{for reservation in reservations:}}
+        <li>{{=reservation.get("name","")}}({{=reservation.get("quantity","")}})</li>
+    {{pass}}
+    </ul>
+{{pass}}
