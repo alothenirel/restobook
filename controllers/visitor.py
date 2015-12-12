@@ -5,7 +5,18 @@ def index():
     entry point
     List all restaurant in DB
     """
-    restaurants = db(db.restaurant.id > 0).select()
+    session.quantity = int(request.vars.get("quantity",
+                                            session.quantity or 1))
+    date = request.vars.get("date",None)
+    if date :
+        session.date = datetime.datetime.strptime(date,
+                                                  "%Y-%m-%d %H:%M:%S")
+    else :
+        session.date = datetime.datetime.now()
+
+    query = (db.restaurant.id > 0)
+    query &= (db.restaurant.capacity >= session.quantity)
+    restaurants = [ r for r in db(query).select() if left_space(r)]
     return dict(restaurants=restaurants)
 
 def reserve():
@@ -23,6 +34,11 @@ def reserve():
 
     form = SQLFORM(db.reservation)
     form.vars.restaurant = restaurant.id
+    if session.quantity and not form.vars.quantity:
+        form.vars.quantity = session.quantity
+    if session.date and not form.vars.planned_date:
+        form.vars.planned_date = session.date
+
     if form.process().accepted:
         session.flash = 'Réservation éfféctuée'
         redirect(URL('visitor','index'))

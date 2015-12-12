@@ -1,7 +1,14 @@
 {{response.files.append(URL('static',"css/visitor/index.css"))}}
 {{extend 'layout.html'}}
+<form action="" method="get">
+    Je cherche un restaurant le
+    <input class="datetime" type="text" name="date" value autocomplete="off">
+    pour
+    <input type="number" name="quantity" min="1" step="1" value="{{=session.quantity}}">
+    personne(s).
+    <input type="submit" value="Touver">
+</form>
 
-<h1>Les Restaurants :</h1>
 <table id="restaurants">
 {{for restaurant in restaurants:}}
     <tr>
