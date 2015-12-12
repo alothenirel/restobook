@@ -13,10 +13,10 @@ def index():
                                                   "%Y-%m-%d %H:%M:%S")
     else :
         session.date = datetime.datetime.now()
-
     query = (db.restaurant.id > 0)
     query &= (db.restaurant.capacity >= session.quantity)
-    restaurants = [ r for r in db(query).select() if left_space(r)]
+    query &= availibility_query(session.date)
+    restaurants = [ r for r in db(query).select() if left_space(r.restaurant)]
     return dict(restaurants=restaurants)
 
 def reserve():
@@ -38,6 +38,10 @@ def reserve():
         form.vars.quantity = session.quantity
     if session.date and not form.vars.planned_date:
         form.vars.planned_date = session.date
+
+    if not left_space(restaurant):
+        session.flash = 'Le restaurant est complet'
+        redirect(URL('visitor','index'))
 
     if form.process().accepted:
         session.flash = 'Réservation éfféctuée'

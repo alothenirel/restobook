@@ -2,7 +2,7 @@
 {{extend 'layout.html'}}
 <form action="" method="get">
     Je cherche un restaurant le
-    <input class="datetime" type="text" name="date" value autocomplete="off">
+    <input class="datetime" type="text" name="date" value="{{=session.date.strftime("%Y-%m-%d %H:%M:%S")}}" autocomplete="off">
     pour
     <input type="number" name="quantity" min="1" step="1" value="{{=session.quantity}}">
     personne(s).
@@ -10,7 +10,8 @@
 </form>
 
 <table id="restaurants">
-{{for restaurant in restaurants:}}
+{{for row in restaurants:}}
+    {{restaurant = row.restaurant}}
     <tr>
         <td>{{=restaurant.get("name","Nom indisponnible")}}</td>
         <td>{{=restaurant.get("address","Adresse indisponnible")}}</td>
